@@ -184,7 +184,7 @@ int main(int argc, const char* argv[])
         }
     }
 
-    if (done != 2) {
+    if (done2 != 2) {
         /*
          * This stops the stream, loop again until it's stopped.
          */
