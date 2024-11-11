@@ -42,7 +42,7 @@ transporting them over different protocols.
 %package devel
 Summary:        library for DNS encapsulations and transporting of them - development files
 Group:          Development/Libraries/C and C++
-Requires:       %{libname} = %{version}
+Requires:       %{libname}%{?_isa} = %{version}-%{release}
 Requires:       tinyframe-devel
 %if 0%{?suse_version} || 0%{?sle_version}
 Requires:       libprotobuf-c-devel
@@ -62,16 +62,15 @@ transporting them over different protocols.
 %build
 sh autogen.sh
 %configure --disable-examples
-make %{?_smp_mflags}
+%make_build
 
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 
 
-%clean
-rm -rf $RPM_BUILD_ROOT
+%check
+%make_build test
 
 
 %post -n %{libname}
@@ -83,12 +82,10 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %files -n %{libname}
-%defattr(-,root,root,-)
 %{_libdir}/libdnswire.so.%{sover}*
 
 
 %files devel
-%defattr(-,root,root,-)
 %{_includedir}/*
 # %{_mandir}/man3/*
 %{_libdir}/libdnswire.so
